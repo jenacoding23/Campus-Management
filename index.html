@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6558e8">
+  <title>Smart Campus 360 | Campus Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark"><i class="bi bi-mortarboard-fill"></i></div>
+        <div>
+          <div class="brand-name">Campus<span>360</span></div><small>SMART CAMPUS PORTAL</small>
+        </div>
+        <button class="icon-btn sidebar-close d-lg-none" id="closeSidebar" aria-label="Close menu"><i
+            class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="campus-switcher">
+        <div class="campus-avatar"><i class="bi bi-buildings-fill"></i></div>
+        <div class="flex-grow-1"><strong>GIFT Campus</strong><small>Student workspace</small></div>
+        <i class="bi bi-chevron-expand"></i>
+      </div>
+      <div class="nav-caption">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="overview"><i
+            class="bi bi-grid-1x2-fill"></i><span>Overview</span><span class="nav-dot"></span></button>
+        <button class="nav-link" data-view="attendance"><i
+            class="bi bi-calendar2-check"></i><span>Attendance</span></button>
+        <button class="nav-link" data-view="assignments"><i
+            class="bi bi-journal-check"></i><span>Assignments</span><span class="nav-count"
+            id="assignmentNavCount">4</span></button>
+        <button class="nav-link" data-view="notices"><i class="bi bi-megaphone"></i><span>Notice board</span></button>
+        <button class="nav-link" data-view="events"><i class="bi bi-calendar-event"></i><span>Campus
+            events</span></button>
+      </nav>
+      <div class="nav-caption mt-4">PERSONAL</div>
+      <nav class="side-nav">
+        <button class="nav-link" data-view="performance"><i class="bi bi-graph-up-arrow"></i><span>My
+            performance</span></button>
+        <button class="nav-link" data-view="resources"><i class="bi bi-folder2-open"></i><span>Resources</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon"><i class="bi bi-stars"></i></div>
+          <strong>Make this semester count!</strong>
+          <p>Small steps every day lead to big results.</p>
+          <div class="help-progress"><span></span></div>
+          <small>Keep your momentum going</small>
+        </div>
+        <button class="profile-row" id="profileButton">
+          <div class="profile-avatar">SJ</div>
+          <div class="profile-copy"><strong>Satyajit Jena</strong><small>B.Tech · Computer Science</small></div>
+          <i class="bi bi-three-dots"></i>
+        </button>
+      </div>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="d-flex align-items-center gap-3">
+          <button class="icon-btn d-lg-none" id="menuToggle" aria-label="Open menu"><i class="bi bi-list"></i></button>
+          <div class="breadcrumb-line"><span>Workspace</span><i class="bi bi-chevron-right"></i><strong
+              id="breadcrumbTitle">Overview</strong></div>
+        </div>
+        <div class="topbar-actions">
+          <div class="search-box d-none d-md-flex"><i class="bi bi-search"></i><input id="globalSearch" type="search"
+              placeholder="Search anything..." aria-label="Search dashboard"><kbd>⌘ K</kbd></div>
+          <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><i
+              class="bi bi-moon-stars"></i></button>
+          <div class="dropdown">
+            <button class="icon-btn notification-trigger" data-bs-toggle="dropdown" aria-expanded="false"
+              aria-label="Notifications"><i class="bi bi-bell"></i><span class="notification-pip"></span></button>
+            <div class="dropdown-menu dropdown-menu-end notification-menu p-0">
+              <div class="notification-head"><strong>Notifications</strong><span class="soft-badge">Today</span></div>
+              <div class="notification-item"><span class="notification-symbol purple"><i
+                    class="bi bi-journal-check"></i></span>
+                <div><strong>Assignment reminder</strong><small>Web Technology is due tomorrow.</small></div>
+              </div>
+              <div class="notification-item"><span class="notification-symbol orange"><i
+                    class="bi bi-megaphone"></i></span>
+                <div><strong>New campus notice</strong><small>Placement orientation announced.</small></div>
+              </div>
+              <div class="notification-item"><span class="notification-symbol green"><i
+                    class="bi bi-calendar-event"></i></span>
+                <div><strong>Upcoming event</strong><small>Innovation Day this Friday.</small></div>
+              </div>
+              <button class="notification-footer" id="markRead">Mark all as read</button>
+            </div>
+          </div>
+          <div class="topbar-date d-none d-xl-flex"><i class="bi bi-calendar3"></i><span id="todayLabel"></span></div>
+        </div>
+      </header>
+
+      <div class="page-wrap">
+        <section class="view-panel active" id="view-overview">
+          <div class="welcome-row">
+            <div>
+              <div class="eyebrow"><span class="live-dot"></span> YOUR CAMPUS AT A GLANCE</div>
+              <h1>Good <span id="greeting">morning</span>, Satyajit <span class="wave">✦</span></h1>
+              <p class="page-subtitle">Here's what's happening with your campus life today.</p>
+            </div>
+            <button class="btn btn-gradient" id="quickAddBtn"><i class="bi bi-plus-lg me-2"></i>Quick add</button>
+          </div>
+
+          <div class="hero-banner">
+            <div class="hero-content">
+              <div class="hero-tag"><i class="bi bi-stars"></i> SEMESTER SNAPSHOT</div>
+              <h2>Your goals.<br><span>Your next milestone.</span></h2>
+              <p>Stay focused, keep learning, and make every class count.</p>
+              <button class="btn hero-btn" data-navigate="performance">View my progress <i
+                  class="bi bi-arrow-up-right ms-2"></i></button>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="orbit orbit-one"></div>
+              <div class="orbit orbit-two"></div>
+              <div class="hero-book"><i class="bi bi-book-half"></i></div>
+              <div class="float-card float-card-one"><i class="bi bi-check-circle-fill"></i><span>Goals on track</span>
+              </div>
+              <div class="float-card float-card-two"><i class="bi bi-lightning-charge-fill"></i><span>Keep it up!</span>
+              </div>
+              <div class="hero-spark spark-one">✦</div>
+              <div class="hero-spark spark-two">✧</div>
+            </div>
+            <div class="hero-decoration"></div>
+          </div>
+
+          <div class="section-heading">
+            <div>
+              <h3>Your overview</h3>
+              <p>Quick insights into your academic journey</p>
+            </div><button class="text-action" data-navigate="performance">View analytics <i
+                class="bi bi-arrow-right"></i></button>
+          </div>
+          <div class="row g-3 stats-grid">
+            <div class="col-6 col-xl-3">
+              <article class="stat-card stat-violet">
+                <div class="stat-top">
+                  <div class="stat-icon"><i class="bi bi-calendar2-check"></i></div><span class="stat-trend"><i
+                      class="bi bi-arrow-up-right"></i> 4.2%</span>
+                </div>
+                <div class="stat-value count-up" data-count="87">0</div>
+                <div class="stat-label">Attendance rate <span>%</span></div>
+                <div class="stat-foot"><span class="mini-bars"><i style="height:40%"></i><i style="height:65%"></i><i
+                      style="height:52%"></i><i style="height:78%"></i><i style="height:62%"></i><i
+                      style="height:90%"></i><i style="height:100%"></i></span><small>Looking good this month</small>
+                </div>
+              </article>
+            </div>
+            <div class="col-6 col-xl-3">
+              <article class="stat-card stat-orange">
+                <div class="stat-top">
+                  <div class="stat-icon"><i class="bi bi-journal-bookmark"></i></div><span class="stat-chip">This
+                    week</span>
+                </div>
+                <div class="stat-value count-up" data-count="4">0</div>
+                <div class="stat-label">Pending assignments</div>
+                <div class="stat-foot"><span class="foot-icon"><i class="bi bi-clock-history"></i></span><small><b
+                      id="dueSoonCount">2 due soon</b> — stay on top</small></div>
+              </article>
+            </div>
+            <div class="col-6 col-xl-3">
+              <article class="stat-card stat-cyan">
+                <div class="stat-top">
+                  <div class="stat-icon"><i class="bi bi-trophy"></i></div><span class="stat-trend"><i
+                      class="bi bi-arrow-up-right"></i> 8.5%</span>
+                </div>
+                <div class="stat-value"><span class="count-up" data-count="8.6" data-decimals="1">0</span><small
+                    class="value-suffix">/10</small></div>
+                <div class="stat-label">Academic score</div>
+                <div class="stat-foot"><span class="foot-icon"><i class="bi bi-stars"></i></span><small>You're making
+                    progress!</small></div>
+              </article>
+            </div>
+            <div class="col-6 col-xl-3">
+              <article class="stat-card stat-green">
+                <div class="stat-top">
+                  <div class="stat-icon"><i class="bi bi-calendar-event"></i></div><span class="stat-chip">Coming
+                    up</span>
+                </div>
+                <div class="stat-value count-up" data-count="3">0</div>
+                <div class="stat-label">Upcoming events</div>
+                <div class="stat-foot"><span class="foot-icon"><i class="bi bi-people"></i></span><small>Connect, learn,
+                    grow</small></div>
+              </article>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-1">
+            <div class="col-12 col-xl-7">
+              <section class="panel chart-panel h-100">
+                <div class="panel-header">
+                  <div>
+                    <h3>Academic performance</h3>
+                    <p>Your progress over the semester</p>
+                  </div><select class="form-select period-select" id="performancePeriod"
+                    aria-label="Performance period">
+                    <option value="semester">This semester</option>
+                    <option value="month">Last 6 months</option>
+                  </select>
+                </div>
+                <div class="chart-legend"><span><i class="legend-dot violet-dot"></i> Attendance</span><span><i
+                      class="legend-dot orange-dot"></i> Assignments</span></div>
+                <div class="chart-wrap"><canvas id="performanceChart"
+                    aria-label="Academic performance line chart"></canvas></div>
+                <div class="chart-insight"><span class="insight-icon"><i
+                      class="bi bi-lightbulb"></i></span><span><strong>Nice momentum!</strong> Your attendance has
+                    improved compared with the previous period.</span></div>
+              </section>
+            </div>
+            <div class="col-12 col-xl-5">
+              <section class="panel h-100">
+                <div class="panel-header">
+                  <div>
+                    <h3>Attendance by subject</h3>
+                    <p>Keep your attendance on track</p>
+                  </div><button class="more-btn" data-navigate="attendance" aria-label="View attendance"><i
+                      class="bi bi-arrow-up-right"></i></button>
+                </div>
+                <div class="attendance-summary">
+                  <div class="attendance-ring" id="attendanceRing">
+                    <div><strong id="overallAttendance">87%</strong><small>Overall</small></div>
+                  </div>
+                  <div class="attendance-summary-copy"><strong>You're doing well!</strong>
+                    <p>Keep attending classes to maintain your progress.</p><span class="status-pill status-good"><i
+                        class="bi bi-check-circle-fill"></i> Above 75% target</span>
+                  </div>
+                </div>
+                <div class="subject-list" id="subjectPreview"></div>
+                <button class="btn btn-soft w-100 mt-3" data-navigate="attendance">View attendance details <i
+                    class="bi bi-arrow-right ms-1"></i></button>
+              </section>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-1">
+            <div class="col-12 col-xl-7">
+              <section class="panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Assignments</h3>
+                    <p>Don't let deadlines sneak up on you</p>
+                  </div><button class="text-action" data-navigate="assignments">View all <i
+                      class="bi bi-arrow-right"></i></button>
+                </div>
+                <div class="table-responsive">
+                  <table class="table campus-table align-middle">
+                    <thead>
+                      <tr>
+                        <th>ASSIGNMENT</th>
+                        <th>SUBJECT</th>
+                        <th>DUE DATE</th>
+                        <th>STATUS</th>
+                      </tr>
+                    </thead>
+                    <tbody id="assignmentPreview"></tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+            <div class="col-12 col-xl-5">
+              <section class="panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Campus notices</h3>
+                    <p>Latest updates from your campus</p>
+                  </div><button class="text-action" data-navigate="notices">All notices <i
+                      class="bi bi-arrow-right"></i></button>
+                </div>
+                <div class="notice-list" id="noticePreview"></div>
+              </section>
+            </div>
+          </div>
+          <div class="row g-3 mt-1">
+            <div class="col-12">
+              <section class="panel event-strip-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Coming up on campus</h3>
+                    <p>Make room for something exciting</p>
+                  </div><button class="text-action" data-navigate="events">Explore events <i
+                      class="bi bi-arrow-right"></i></button>
+                </div>
+                <div class="event-strip" id="eventPreview"></div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <section class="view-panel" id="view-attendance">
+          <div class="page-title-row">
+            <div>
+              <div class="eyebrow">ACADEMIC TRACKER</div>
+              <h1>Attendance <span class="title-accent">hub</span></h1>
+              <p class="page-subtitle">Know where you stand and plan your next class.</p>
+            </div><button class="btn btn-gradient" id="addSubjectBtn"><i class="bi bi-plus-lg me-2"></i>Add
+              subject</button>
+          </div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-4">
+              <div class="mini-summary purple-summary"><span>Total attendance</span><strong
+                  id="attendanceTotalLarge">87%</strong><small>Across all subjects</small></div>
+            </div>
+            <div class="col-md-4">
+              <div class="mini-summary green-summary"><span>On-track subjects</span><strong
+                  id="onTrackCount">4</strong><small>At or above 75%</small></div>
+            </div>
+            <div class="col-md-4">
+              <div class="mini-summary orange-summary"><span>Classes attended</span><strong id="classesAttended">174 /
+                  200</strong><small>Recorded so far</small></div>
+            </div>
+          </div>
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>Subject attendance</h3>
+                <p>Use the controls to record a class</p>
+              </div>
+              <div class="d-flex gap-2"><select class="form-select period-select" id="attendanceFilter">
+                  <option value="all">All subjects</option>
+                  <option value="low">Below 75%</option>
+                  <option value="good">75% and above</option>
+                </select></div>
+            </div>
+            <div class="table-responsive">
+              <table class="table campus-table align-middle">
+                <thead>
+                  <tr>
+                    <th>SUBJECT</th>
+                    <th>FACULTY</th>
+                    <th>ATTENDED</th>
+                    <th>ATTENDANCE</th>
+                    <th>STATUS</th>
+                    <th>RECORD CLASS</th>
+                  </tr>
+                </thead>
+                <tbody id="attendanceTable"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="panel mt-3">
+            <div class="panel-header">
+              <div>
+                <h3>Attendance target calculator</h3>
+                <p>Estimate future classes needed to reach your target</p>
+              </div><span class="soft-badge"><i class="bi bi-calculator me-1"></i> Planning tool</span>
+            </div>
+            <div class="calculator-grid">
+              <div><label class="form-label" for="calcAttended">Classes attended</label><input class="form-control"
+                  type="number" min="0" id="calcAttended" value="36"></div>
+              <div><label class="form-label" for="calcTotal">Total classes</label><input class="form-control"
+                  type="number" min="1" id="calcTotal" value="45"></div>
+              <div><label class="form-label" for="calcTarget">Target attendance (%)</label><input class="form-control"
+                  type="number" min="1" max="100" id="calcTarget" value="75"></div>
+              <div class="calc-result" id="calcResult"><small>Classes to attend</small><strong>0</strong><span>You're on
+                  track!</span></div>
+            </div><button class="btn btn-gradient mt-3" id="calculateAttendance"><i
+                class="bi bi-calculator me-2"></i>Calculate target</button>
+          </section>
+        </section>
+
+        <section class="view-panel" id="view-assignments">
+          <div class="page-title-row">
+            <div>
+              <div class="eyebrow">STAY ORGANIZED</div>
+              <h1>Assignment <span class="title-accent">planner</span></h1>
+              <p class="page-subtitle">Plan your work, beat the deadline, celebrate the progress.</p>
+            </div><button class="btn btn-gradient" id="newAssignmentBtn"><i class="bi bi-plus-lg me-2"></i>New
+              assignment</button>
+          </div>
+          <div class="assignment-summary-row" id="assignmentSummary"></div>
+          <section class="panel">
+            <div class="panel-header flex-wrap">
+              <div>
+                <h3>All assignments</h3>
+                <p id="assignmentCountLabel">Your assignment list</p>
+              </div>
+              <div class="d-flex gap-2 flex-wrap">
+                <div class="table-search"><i class="bi bi-search"></i><input id="assignmentSearch"
+                    placeholder="Search assignments..." aria-label="Search assignments"></div><select
+                  class="form-select period-select" id="assignmentFilter">
+                  <option value="all">All status</option>
+                  <option value="Pending">Pending</option>
+                  <option value="In progress">In progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table campus-table align-middle">
+                <thead>
+                  <tr>
+                    <th>ASSIGNMENT</th>
+                    <th>SUBJECT</th>
+                    <th>DUE DATE</th>
+                    <th>PRIORITY</th>
+                    <th>STATUS</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="assignmentTable"></tbody>
+              </table>
+            </div>
+            <div class="empty-state d-none" id="assignmentEmpty"><i class="bi bi-inbox"></i><strong>No assignments
+                found</strong><span>Try a different search or add an assignment.</span></div>
+          </section>
+        </section>
+
+        <section class="view-panel" id="view-notices">
+          <div class="page-title-row">
+            <div>
+              <div class="eyebrow">CAMPUS BULLETIN</div>
+              <h1>Notice <span class="title-accent">board</span></h1>
+              <p class="page-subtitle">The latest updates, all in one place.</p>
+            </div><button class="btn btn-gradient" id="addNoticeBtn"><i class="bi bi-plus-lg me-2"></i>Post
+              notice</button>
+          </div>
+          <div class="notice-filters"><button class="filter-chip active" data-notice-filter="All">All
+              notices</button><button class="filter-chip" data-notice-filter="Academic">Academic</button><button
+              class="filter-chip" data-notice-filter="Events">Events</button><button class="filter-chip"
+              data-notice-filter="Placement">Placement</button></div>
+          <div class="notice-grid" id="noticeGrid"></div>
+        </section>
+
+        <section class="view-panel" id="view-events">
+          <div class="page-title-row">
+            <div>
+              <div class="eyebrow">CAMPUS LIFE</div>
+              <h1>Events & <span class="title-accent">happenings</span></h1>
+              <p class="page-subtitle">Discover what’s happening and save your spot.</p>
+            </div><button class="btn btn-gradient" id="addEventBtn"><i class="bi bi-plus-lg me-2"></i>Add event</button>
+          </div>
+          <div class="event-feature">
+            <div class="event-feature-icon"><i class="bi bi-stars"></i></div>
+            <div><span class="event-feature-label">CAMPUS HIGHLIGHT</span>
+              <h2>Ideas become impact.</h2>
+              <p>Meet curious minds, explore new ideas, and be part of what comes next.</p>
+            </div>
+            <div class="event-feature-decoration"><i class="bi bi-lightbulb-fill"></i></div>
+          </div>
+          <div class="section-heading mt-4">
+            <div>
+              <h3>Upcoming events</h3>
+              <p>Experiences worth putting on your calendar</p>
+            </div><span class="soft-badge" id="eventCountBadge">3 events</span>
+          </div>
+          <div class="events-grid" id="eventsGrid"></div>
+        </section>
+
+        <section class="view-panel" id="view-performance">
+          <div class="page-title-row">
+            <div>
+              <div class="eyebrow">YOUR GROWTH STORY</div>
+              <h1>My <span class="title-accent">performance</span></h1>
+              <p class="page-subtitle">Progress isn't magic. It's the little things you do every day.</p>
+            </div><button class="btn btn-outline-brand" id="downloadReport"><i class="bi bi-download me-2"></i>Export
+              report</button>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div class="performance-card">
+                <div class="performance-card-icon purple"><i class="bi bi-calendar2-check"></i></div><span>Attendance
+                  score</span><strong id="perfAttendance">87%</strong>
+                <div class="progress">
+                  <div class="progress-bar bg-purple" id="perfAttendanceBar" style="width:87%"></div>
+                </div><small>Target: 75%</small>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="performance-card">
+                <div class="performance-card-icon orange"><i class="bi bi-journal-check"></i></div><span>Assignments
+                  completed</span><strong id="perfAssignments">68%</strong>
+                <div class="progress">
+                  <div class="progress-bar bg-orange" id="perfAssignmentsBar" style="width:68%"></div>
+                </div><small>Keep up the steady work</small>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="performance-card">
+                <div class="performance-card-icon green"><i class="bi bi-trophy"></i></div><span>Academic
+                  score</span><strong>8.6 <small>/ 10</small></strong>
+                <div class="progress">
+                  <div class="progress-bar bg-green" style="width:86%"></div>
+                </div><small>Strong semester progress</small>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 mt-1">
+            <div class="col-12 col-xl-7">
+              <section class="panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Performance trends</h3>
+                    <p>Attendance and assignment completion</p>
+                  </div>
+                </div>
+                <div class="chart-wrap tall-chart"><canvas id="performanceChartLarge"></canvas></div>
+              </section>
+            </div>
+            <div class="col-12 col-xl-5">
+              <section class="panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Weekly focus</h3>
+                    <p>Build a little momentum every day</p>
+                  </div>
+                </div>
+                <div class="focus-list">
+                  <div><span class="focus-day">MON</span>
+                    <div class="focus-track"><span style="width:80%"></span></div><strong>80%</strong>
+                  </div>
+                  <div><span class="focus-day">TUE</span>
+                    <div class="focus-track"><span style="width:65%"></span></div><strong>65%</strong>
+                  </div>
+                  <div><span class="focus-day">WED</span>
+                    <div class="focus-track"><span style="width:92%"></span></div><strong>92%</strong>
+                  </div>
+                  <div><span class="focus-day">THU</span>
+                    <div class="focus-track"><span style="width:74%"></span></div><strong>74%</strong>
+                  </div>
+                  <div><span class="focus-day">FRI</span>
+                    <div class="focus-track"><span style="width:88%"></span></div><strong>88%</strong>
+                  </div>
+                </div>
+                <div class="tip-card"><i class="bi bi-lightbulb-fill"></i>
+                  <div><strong>One small goal</strong>
+                    <p>Spend 25 minutes reviewing one topic today. Consistency compounds.</p>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <section class="view-panel" id="view-resources">
+          <div class="page-title-row">
+            <div>
+              <div class="eyebrow">YOUR LEARNING TOOLKIT</div>
+              <h1>Study <span class="title-accent">resources</span></h1>
+              <p class="page-subtitle">Keep your learning essentials easy to find.</p>
+            </div>
+          </div>
+          <div class="resource-grid">
+            <a class="resource-card" href="https://developer.mozilla.org/" target="_blank" rel="noopener">
+              <div class="resource-icon lavender"><i class="bi bi-code-slash"></i></div>
+              <h3>Web development</h3>
+              <p>HTML, CSS, JavaScript and browser APIs.</p><span>Explore MDN <i
+                  class="bi bi-arrow-up-right"></i></span>
+            </a>
+            <a class="resource-card" href="https://getbootstrap.com/docs/" target="_blank" rel="noopener">
+              <div class="resource-icon pink"><i class="bi bi-bootstrap-fill"></i></div>
+              <h3>Bootstrap docs</h3>
+              <p>Components, layout utilities and responsive design.</p><span>Read documentation <i
+                  class="bi bi-arrow-up-right"></i></span>
+            </a>
+            <a class="resource-card" href="https://www.freecodecamp.org/" target="_blank" rel="noopener">
+              <div class="resource-icon mint"><i class="bi bi-laptop"></i></div>
+              <h3>Practice coding</h3>
+              <p>Build skills through hands-on coding lessons.</p><span>Start learning <i
+                  class="bi bi-arrow-up-right"></i></span>
+            </a>
+            <a class="resource-card" href="https://www.geeksforgeeks.org/" target="_blank" rel="noopener">
+              <div class="resource-icon peach"><i class="bi bi-journal-code"></i></div>
+              <h3>CS interview prep</h3>
+              <p>Explore computer science concepts and practice.</p><span>Explore topics <i
+                  class="bi bi-arrow-up-right"></i></span>
+            </a>
+          </div>
+        </section>
+
+        <footer class="app-footer"><span>© 2026 Smart Campus 360</span><span>Made for better campus days <i
+              class="bi bi-heart-fill"></i></span><span class="demo-label"><i class="bi bi-shield-check"></i> Demo data
+            · stored in this browser</span></footer>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal fade" id="assignmentModal" tabindex="-1" aria-labelledby="assignmentModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content campus-modal" id="assignmentForm">
+        <div class="modal-header">
+          <div><span class="modal-kicker">STAY ON TRACK</span>
+            <h5 class="modal-title" id="assignmentModalTitle">Add assignment</h5>
+          </div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body"><input type="hidden" id="assignmentId">
+          <div class="mb-3"><label for="assignmentName" class="form-label">Assignment title</label><input
+              class="form-control" id="assignmentName" required maxlength="90" placeholder="e.g. Database mini project">
+          </div>
+          <div class="row g-3">
+            <div class="col-6"><label for="assignmentSubject" class="form-label">Subject</label><input
+                class="form-control" id="assignmentSubject" required maxlength="60" placeholder="e.g. DBMS"></div>
+            <div class="col-6"><label for="assignmentDue" class="form-label">Due date</label><input class="form-control"
+                id="assignmentDue" type="date" required></div>
+            <div class="col-6"><label for="assignmentPriority" class="form-label">Priority</label><select
+                class="form-select" id="assignmentPriority">
+                <option>Medium</option>
+                <option>High</option>
+                <option>Low</option>
+              </select></div>
+            <div class="col-6"><label for="assignmentStatus" class="form-label">Status</label><select
+                class="form-select" id="assignmentStatus">
+                <option>Pending</option>
+                <option>In progress</option>
+                <option>Completed</option>
+              </select></div>
+          </div>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-light"
+            data-bs-dismiss="modal">Cancel</button><button class="btn btn-gradient" type="submit"><i
+              class="bi bi-check2 me-1"></i>Save assignment</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="subjectModal" tabindex="-1" aria-labelledby="subjectModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content campus-modal" id="subjectForm">
+        <div class="modal-header">
+          <div><span class="modal-kicker">ATTENDANCE TRACKER</span>
+            <h5 class="modal-title" id="subjectModalTitle">Add subject</h5>
+          </div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3"><label class="form-label" for="subjectName">Subject name</label><input class="form-control"
+              id="subjectName" required maxlength="60" placeholder="e.g. Computer Networks"></div>
+          <div class="mb-3"><label class="form-label" for="subjectFaculty">Faculty name</label><input
+              class="form-control" id="subjectFaculty" required maxlength="60" placeholder="e.g. Dr. Sharma"></div>
+          <div class="row g-3">
+            <div class="col-6"><label class="form-label" for="subjectAttended">Classes attended</label><input
+                class="form-control" id="subjectAttended" type="number" min="0" value="0" required></div>
+            <div class="col-6"><label class="form-label" for="subjectTotal">Total classes</label><input
+                class="form-control" id="subjectTotal" type="number" min="1" value="1" required></div>
+          </div>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-light"
+            data-bs-dismiss="modal">Cancel</button><button class="btn btn-gradient" type="submit">Save subject</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="noticeModal" tabindex="-1" aria-labelledby="noticeModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content campus-modal" id="noticeForm">
+        <div class="modal-header">
+          <div><span class="modal-kicker">CAMPUS BULLETIN</span>
+            <h5 class="modal-title" id="noticeModalTitle">Post a notice</h5>
+          </div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3"><label class="form-label" for="noticeTitle">Notice title</label><input class="form-control"
+              id="noticeTitle" required maxlength="100" placeholder="Enter a clear title"></div>
+          <div class="mb-3"><label class="form-label" for="noticeCategory">Category</label><select class="form-select"
+              id="noticeCategory">
+              <option>Academic</option>
+              <option>Events</option>
+              <option>Placement</option>
+            </select></div>
+          <div class="mb-3"><label class="form-label" for="noticeDescription">Details</label><textarea
+              class="form-control" id="noticeDescription" rows="3" required maxlength="400"
+              placeholder="Write the important details..."></textarea></div>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-light"
+            data-bs-dismiss="modal">Cancel</button><button class="btn btn-gradient" type="submit">Publish
+            notice</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content campus-modal" id="eventForm">
+        <div class="modal-header">
+          <div><span class="modal-kicker">CAMPUS LIFE</span>
+            <h5 class="modal-title" id="eventModalTitle">Add campus event</h5>
+          </div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3"><label class="form-label" for="eventName">Event name</label><input class="form-control"
+              id="eventName" required maxlength="90" placeholder="e.g. Coding workshop"></div>
+          <div class="row g-3">
+            <div class="col-6"><label class="form-label" for="eventDate">Date</label><input class="form-control"
+                id="eventDate" type="date" required></div>
+            <div class="col-6"><label class="form-label" for="eventTime">Time</label><input class="form-control"
+                id="eventTime" type="time" required></div>
+          </div>
+          <div class="mt-3"><label class="form-label" for="eventLocation">Location</label><input class="form-control"
+              id="eventLocation" required maxlength="90" placeholder="e.g. Main Auditorium"></div>
+          <div class="mt-3"><label class="form-label" for="eventCategory">Category</label><select class="form-select"
+              id="eventCategory">
+              <option>Workshop</option>
+              <option>Academic</option>
+              <option>Community</option>
+              <option>Placement</option>
+            </select></div>
+        </div>
+        <div class="modal-footer"><button type="button" class="btn btn-light"
+            data-bs-dismiss="modal">Cancel</button><button class="btn btn-gradient" type="submit">Save event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer" aria-live="polite"
+    aria-atomic="true"></div>
+  <div class="quick-add-menu d-none" id="quickAddMenu"><button data-quick="assignment"><i
+        class="bi bi-journal-plus"></i> New assignment</button><button data-quick="notice"><i
+        class="bi bi-megaphone"></i> Post notice</button><button data-quick="event"><i class="bi bi-calendar-plus"></i>
+      Add event</button></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
